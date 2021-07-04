@@ -1,6 +1,6 @@
 /* 沙盒基本参数设置 */
 
-var sandboxCapicity = 10000000;
+var sandboxCapicity = 10;
 // 定义最大玩家数量；
 
 var sandboxMapSize = 1000;
@@ -58,17 +58,25 @@ var Player = {
   },
   // 返回玩家的总战斗场次
 
+  get level() {
+    return expToLevel(this.status);
+  },
+  
   win(exp) {
     this.status = this.status + expTransfer(exp);
     this.kill++;
   },
 
-  defeat() {
+  dead() {
     this.status = -1;
     this.death++;
   },
 
   battleLog: [],
+
+  record(input) {
+    this.battleLog.push(input);
+  },
   //玩家的战斗记录
 };
 
@@ -96,24 +104,51 @@ function expTransfer(exp) {
 // 死亡时经验值结算，获得对方经验的1/3，最低获得1点
 
 function battle(params) {
-  switch (arguments.length) {
+  switch (params.length) {
     case 0:
       console.log("No one in the arena!!!");
       break;
 
     case 1:
-      console.log(params.id + " battled himself");
+      console.log(params[0].id + " battled himself");
       break;
 
     default:
       let arena = [];
-      for (let index = 0; index < arguments.length; index++) {
-        arena.push(arguments[index]);
+      for (let index = 0; index < params.length; index++) {
+        arena.push(params[index]);
+      }
+      arena.sort(function () {
+        return 0.5 - Math.random();
+      });
+
+      while (arena.length > 1) {
+        arena.splice(fight(arena[1], arena[0]), 1);
       }
       // 这里放打架时候的代码
-      console.log("emmm...");
       break;
   }
 }
 
-function fight(a, b) {}
+function fight(a, b) {
+  let ra = a.status + 1;
+  let rb = b.status + 1;
+  if (_.random(ra + rb - 1) < ra) {
+    a.win(b.status);
+
+    b.dead();
+
+    return 0;
+  } else {
+    b.win(a.status);
+
+    a.dead();
+
+    return 1;
+  }
+}
+
+Sandbox.initPlayer();
+
+battle(Sandbox.playerList);
+console.log(Sandbox.playerList);
