@@ -1,6 +1,6 @@
 /* 沙盒基本参数设置 */
 
-var sandboxCapicity = 10;
+var sandboxCapicity = 1000;
 // 定义最大玩家数量；
 
 var sandboxMapSize = 1000;
@@ -21,11 +21,20 @@ var Sandbox = {
   timesRun: 0,
   // 沙盒运行过的次数
 
+  initMap() {
+    this.map = [];
+    for (let index = 0; index < sandboxMapSize; index++) {
+      this.map.push([]);
+    }
+  },
+
   initPlayer() {
     this.playerList = [];
     for (let index = 0; index < sandboxCapicity; index++) {
       let i = Object.create(Player);
       i.id = index;
+      i.setLocation = _.random(sandboxMapSize - 1);
+      i.status = 0;
       this.playerList.push(i);
     }
   },
@@ -50,6 +59,11 @@ var Player = {
 
   location: NaN,
 
+  set setLocation(target) {
+    this.location = target;
+    Sandbox.map[target].push(this);
+  },
+
   get kd() {
     return this.kill + "/" + this.death;
   },
@@ -70,15 +84,13 @@ var Player = {
   },
 
   dead() {
-    this.status = -1;
-    this.death++;
+    this.status = -1; // 状态记为死亡
+    this.death++; // 记录死亡次数
+    this.location =NaN;
   },
 
   battleLog: [],
 
-  record(input) {
-    this.battleLog.push(input);
-  },
   //玩家的战斗记录
 
   move(path) {
@@ -154,7 +166,7 @@ function reval(target) {
     throw "Living cannot reval";
   } else {
     target.status = 0;
-    target.location = _.random(sandboxMapSize-1)
+    target.location = _.random(sandboxMapSize - 1);
   }
 }
 
