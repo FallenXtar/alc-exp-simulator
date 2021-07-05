@@ -4,7 +4,7 @@ var sandboxCapicity = 10;
 // 定义最大玩家数量；
 
 var sandboxMapSize = 1000;
-// 定义一维地图大小，地图会向原点两边扩展这个大小；
+// 定义一维地图大小，地图会向原点右边扩展这个大小；
 
 /* 生成沙盒对象 */
 
@@ -48,6 +48,8 @@ var Player = {
   death: 0,
   // 玩家被击败次数
 
+  location: NaN,
+
   get kd() {
     return this.kill + "/" + this.death;
   },
@@ -61,7 +63,7 @@ var Player = {
   get level() {
     return expToLevel(this.status);
   },
-  
+
   win(exp) {
     this.status = this.status + expTransfer(exp);
     this.kill++;
@@ -78,6 +80,10 @@ var Player = {
     this.battleLog.push(input);
   },
   //玩家的战斗记录
+
+  move(path) {
+    this.location = fixLocation(this.location + path);
+  },
 };
 
 /* 一些公用函数 */
@@ -114,16 +120,11 @@ function battle(params) {
       break;
 
     default:
-      let arena = [];
-      for (let index = 0; index < params.length; index++) {
-        arena.push(params[index]);
-      }
-      arena.sort(function () {
+      params.sort(function () {
         return 0.5 - Math.random();
       });
-
-      while (arena.length > 1) {
-        arena.splice(fight(arena[1], arena[0]), 1);
+      while (params.length > 1) {
+        params.splice(fight(params[0], params[1]), 1);
       }
       // 这里放打架时候的代码
       break;
@@ -148,7 +149,26 @@ function fight(a, b) {
   }
 }
 
-Sandbox.initPlayer();
+function reval(target) {
+  if (target.status > -1) {
+    throw "Living cannot reval";
+  } else {
+    target.status = 0;
+    target.location = _.random(sandboxMapSize-1)
+  }
+}
 
-battle(Sandbox.playerList);
-console.log(Sandbox.playerList);
+function fixLocation(a) {
+  if (a < 0) {
+    a = sandboxMapSize + a;
+    a = fixLocation(a);
+    return a;
+  } else if (a > sandboxMapSize - 1) {
+    a = a - sandboxMapSize;
+    a = fixLocation(a);
+    return a;
+  } else {
+    return a;
+  }
+}
+// 这个函数将坐标限制在MapSize范围内，即使得这个坐标系实际上是一个一维封闭坐标系，可以考虑每次坐标处理都套一层这个函数
