@@ -21,10 +21,20 @@ var Sandbox = {
   timesRun: 0,
   // 沙盒运行过的次数
 
+  get deadPlayerList() {
+    let a = [];
+    this.playerList.forEach((element) => {
+      if (element.status < 0) {
+        a.push(element);
+      }
+    });
+    return a;
+  },
+
   getLeaderboard(number) {
     let array = this.playerList;
     array = _.orderBy(array, ["status"], ["desc"]);
-    return 0
+    return array.slice(0, number);
   },
 
   initMap() {
@@ -40,7 +50,7 @@ var Sandbox = {
       let i = Object.create(Player);
       i.id = index;
       i.setLocation = _.random(sandboxMapSize - 1);
-      i.status = 0;
+      i.status = _.random(-100, 100);
       this.playerList.push(i);
     }
   },
