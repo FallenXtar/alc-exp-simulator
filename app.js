@@ -18,4 +18,5 @@ const MainWindow = {
 
 const app = Vue.createApp(MainWindow);
 app.use(ElementPlus);
+ElementPlus.locale(ElementPlus.lang.zhCn);
 app.mount("#app");

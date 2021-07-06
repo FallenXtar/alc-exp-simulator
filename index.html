@@ -17,6 +17,8 @@
     <script src="lib/lodash.js"></script>
     <script src="https://cdn.bootcdn.net/ajax/libs/vue/3.1.2/vue.global.js"></script>
     <script src="https://unpkg.com/element-plus/lib/index.full.js"></script>
+    <script src="//unpkg.com/element-plus/lib/umd/locale/es.js"></script>
+    <script src="//unpkg.com/dayjs/locale/zh-cn.js"></script>
   </head>
 
   <body>
@@ -34,11 +36,23 @@
                       ><div class="grid-content bg-purple">
                         <div>
                           <label for="1">Max Player: </label>
-                          <input id="1" v-model="maxPlayer" type="number" />
+                          <el-input-number
+                            id="1"
+                            v-model="maxPlayer"
+                            size="medium"
+                            min="0"
+                            step="1000"
+                          />
                         </div>
                         <div>
                           <label for="2">Map Size: </label>
-                          <input id="2" v-model="mapSize" type="number" />
+                          <el-input-number
+                            id="2"
+                            v-model="mapSize"
+                            size="medium"
+                            min="0"
+                            step="1000"
+                          />
                         </div></div
                     ></el-col>
                     <el-col :xs="24" :sm="12"
@@ -46,8 +60,8 @@
                     ></el-col>
                   </el-row>
                   <p>
-                    <button @click="update">Update Settings</button
-                    ><button @click="init">Initialize Model</button>
+                    <el-button @click="update">Update Settings</el-button
+                    ><el-button @click="init">Initialize Model</el-button>
                   </p>
                 </fieldset>
               </div></el-main

@@ -21,6 +21,12 @@ var Sandbox = {
   timesRun: 0,
   // 沙盒运行过的次数
 
+  getLeaderboard(number) {
+    let array = this.playerList;
+    array = _.orderBy(array, ["status"], ["desc"]);
+    return 0
+  },
+
   initMap() {
     this.map = [];
     for (let index = 0; index < sandboxMapSize; index++) {
@@ -59,6 +65,9 @@ var Player = {
 
   location: NaN,
 
+  /**
+   * @param {number} target
+   */
   set setLocation(target) {
     _.pull(Sandbox.map[this.location], this.id);
     this.location = target;
@@ -195,5 +204,5 @@ function fixLocation(a) {
 
 function initModel() {
   Sandbox.initMap();
-  Sandbox.initPlayer;
+  Sandbox.initPlayer();
 }
