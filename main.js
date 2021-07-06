@@ -50,7 +50,8 @@ var Sandbox = {
       let i = Object.create(Player);
       i.id = index;
       i.setLocation = _.random(sandboxMapSize - 1);
-      i.status = _.random(-100, 100);
+      i.battleLog = [];
+      // i.status = _.random(-100, 100);
       this.playerList.push(i);
     }
   },
@@ -74,6 +75,20 @@ var Player = {
   // 玩家被击败次数
 
   location: NaN,
+
+  battleLog: [],
+
+  /**
+   * @param {array} content
+   */
+  set log(content) {
+    if (this.battleLog.length < 20) {
+      this.battleLog.push(content);
+    } else {
+      this.battleLog = _.tail(this.battleLog);
+      this.battleLog.push(content);
+    }
+  },
 
   /**
    * @param {number} target
@@ -103,6 +118,9 @@ var Player = {
   win(exp) {
     this.status = this.status + expTransfer(exp);
     this.kill++;
+    if (this.highestExp < this.status) {
+      this.highestExp = this.status;
+    }
   },
   // 玩家战斗胜利，传入参数为对方的经验值
 
@@ -114,9 +132,7 @@ var Player = {
   },
   // 玩家死亡，经验值变为-1，从地图上消失。
 
-  battleLog: [],
-
-  //玩家的战斗记录
+  // 玩家的战斗记录
 
   move(path) {
     this.setLocation = fixLocation(this.location + path);
@@ -174,12 +190,18 @@ function fight(a, b) {
   let ra = _.find(Sandbox.playerList, { id: a });
   let rb = _.find(Sandbox.playerList, { id: b });
   if (_.random(ra.status + rb.status + 1) < ra.status + 1) {
+    ra.log = [Sandbox.timesRun, ra.location, b, rb.status, true];
+    rb.log = [Sandbox.timesRun, rb.location, a, rb.status, false];
+
     ra.win(rb.status);
 
     rb.dead();
 
     return 1;
   } else {
+    rb.log = [Sandbox.timesRun, rb.location, a, rb.status, true];
+    ra.log = [Sandbox.timesRun, ra.location, b, rb.status, false];
+
     rb.win(ra.status);
 
     ra.dead();

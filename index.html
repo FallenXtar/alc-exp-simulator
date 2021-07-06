@@ -30,9 +30,20 @@
               <el-card shadow="hover">
                 <template #header>
                   <div class="card-header">
-                    <span>Model Arguments Setting</span>
+                    <span>Model Arguments Settings</span>
                   </div>
                 </template>
+
+                <el-form :model="settings" label-width="100px">
+                  <el-form-item
+                    label="Max Player"
+                    prop="maxPlayer"
+                    :rules="[
+  { required: true, message: '年龄不能为空'},
+  { type: 'number', message: '年龄必须为数字值'}
+]"
+                  ><el-input type="age" v-model.number="settings.maxPlayer" autocomplete="off"></el-input></el-form-item>
+                </el-form>
 
                 <el-row :gutter="20">
                   <el-col :span="5">
@@ -84,8 +95,33 @@
               <el-divider></el-divider>
               <el-card>
                 <el-empty description="No result yet"></el-empty>
+                <el-table :data="tableData" style="width: 100%">
+                  <el-table-column prop="id" label="日期" width="180">
+                  </el-table-column>
+                  <el-table-column prop="location" label="姓名" width="180">
+                  </el-table-column>
+                  <el-table-column prop="status" label="地址">
+                  </el-table-column>
+                </el-table>
               </el-card> </el-main
-            ><el-footer>footer</el-footer></el-container
+            ><el-footer
+              ><el-row
+                ><div>
+                  <p>
+                    Build with Vue+Element UI Plus | inspired by YeFeng Miao
+                  </p>
+                  <p>
+                    Project hosted on
+                    <a href="https://github.com/FallenXtar/alc-exp-simulator"
+                      >Github</a
+                    >
+                    and
+                    <a href="https://gitee.com/xtar/alc-exp-simulator">Gitee</a
+                    >.
+                  </p>
+                </div></el-row
+              ></el-footer
+            ></el-container
           ><el-aside
             ><p>1</p>
             <p>2</p>

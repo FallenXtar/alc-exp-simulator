@@ -3,6 +3,10 @@ const MainWindow = {
     return {
       maxPlayer: sandboxCapicity,
       mapSize: sandboxMapSize,
+      tableData: Sandbox.playerList,
+      settings: {
+        maxPlayer: 10,
+      },
     };
   },
   methods: {
@@ -12,6 +16,7 @@ const MainWindow = {
     },
     init() {
       initModel();
+      this.tableData = Sandbox.playerList;
     },
   },
 };
