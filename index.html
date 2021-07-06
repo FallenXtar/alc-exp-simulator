@@ -8,22 +8,60 @@
 
     <!-- 引入样式 -->
     <link rel="stylesheet" href="style.css" />
-    <!-- <link
+    <link
       rel="stylesheet"
       href="https://unpkg.com/element-plus/lib/theme-chalk/index.css"
-    /> -->
+    />
 
     <!-- 引入组件库 -->
     <script src="lib/lodash.js"></script>
     <script src="https://cdn.bootcdn.net/ajax/libs/vue/3.1.2/vue.global.js"></script>
-    <!-- <script src="https://unpkg.com/element-plus/lib/index.full.js"></script> -->
+    <script src="https://unpkg.com/element-plus/lib/index.full.js"></script>
   </head>
-  <body>
-    <div id="two-way-binding">
-      <p>{{ message }}</p>
-      <input v-model="message" />
-    </div>
 
+  <body>
+    <div id="app">
+      <el-container class="main">
+        <el-header><h1>All Living Creatures Simulator</h1></el-header>
+        <el-container
+          ><el-container
+            ><el-main
+              ><div>
+                <fieldset>
+                  <legend>Model Argument</legend>
+                  <el-row :gutter="20">
+                    <el-col :xs="24" :sm="12"
+                      ><div class="grid-content bg-purple">
+                        <div>
+                          <label for="1">Max Player: </label>
+                          <input id="1" v-model="maxPlayer" type="number" />
+                        </div>
+                        <div>
+                          <label for="2">Map Size: </label>
+                          <input id="2" v-model="mapSize" type="number" />
+                        </div></div
+                    ></el-col>
+                    <el-col :xs="24" :sm="12"
+                      ><div class="grid-content bg-purple"></div
+                    ></el-col>
+                  </el-row>
+                  <p>
+                    <button @click="update">Update Settings</button
+                    ><button @click="init">Initialize Model</button>
+                  </p>
+                </fieldset>
+              </div></el-main
+            ><el-footer>footer</el-footer></el-container
+          ><el-aside
+            ><p>1</p>
+            <p>2</p>
+            <p>3</p>
+            <p>4</p>
+            <p>5</p>
+            <p></p></el-aside
+        ></el-container>
+      </el-container>
+    </div>
     <script src="main.js"></script>
     <script src="app.js"></script>
   </body>

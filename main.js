@@ -142,7 +142,9 @@ function battle(params) {
       params.sort(function () {
         return 0.5 - Math.random();
       });
-      while (params.length > 1) {}
+      while (params.length > 1) {
+        params.splice(fight(params[0], params[1]), 1);
+      }
       // 这里放打架时候的代码
       break;
   }
@@ -157,13 +159,13 @@ function fight(a, b) {
 
     rb.dead();
 
-    return 0;
+    return 1;
   } else {
     rb.win(ra.status);
 
     ra.dead();
 
-    return 1;
+    return 0;
   }
 }
 
@@ -189,9 +191,9 @@ function fixLocation(a) {
     return a;
   }
 }
-// 这个函数将坐标限制在MapSize范围内，即使得这个坐标系实际上是一个一维封闭坐标系，可以考虑每次坐标处理都套一层这个函数
+// 这个函数将坐标限制在MapSize范围内，使得这个坐标系实际上是一个一维封闭坐标系，可以考虑每次坐标处理都套一层这个函数
 
-Sandbox.initMap();
-Sandbox.initPlayer();
-console.log(Sandbox.playerList);
-console.log(Sandbox.map);
+function initModel() {
+  Sandbox.initMap();
+  Sandbox.initPlayer;
+}
