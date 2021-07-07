@@ -23,100 +23,119 @@
   <body>
     <div id="app">
       <el-container class="main">
-        <el-header><h1>All Living Creatures Simulator</h1></el-header>
-        <el-container
-          ><el-container
-            ><el-main>
+        <el-header>
+          <h1>众生之门 模拟器</h1>
+        </el-header>
+        <el-container>
+          <el-container>
+            <el-main>
               <el-card shadow="hover">
                 <template #header>
                   <div class="card-header">
-                    <span>Model Arguments Settings</span>
+                    <span>模型参数设置</span>
                   </div>
                 </template>
 
-                <el-form :model="settings" label-width="100px">
-                  <el-form-item
-                    label="Max Player"
-                    prop="maxPlayer"
-                    :rules="[
-  { required: true, message: '年龄不能为空'},
-  { type: 'number', message: '年龄必须为数字值'}
-]"
-                  ><el-input type="age" v-model.number="settings.maxPlayer" autocomplete="off"></el-input></el-form-item>
-                </el-form>
-
-                <el-row :gutter="20">
-                  <el-col :span="5">
-                    <label for="1">Max Player:</label>
-                  </el-col>
-                  <el-col :span="5">
-                    <div>
-                      <el-input
-                        id="1"
-                        v-model="maxPlayer"
-                        size="mini"
-                        min="0"
-                      />
-                    </div>
-                  </el-col>
-                </el-row>
-
-                <el-row :gutter="20">
-                  <el-col :span="5">
-                    <div><label for="2">Map Size: </label></div>
-                  </el-col>
-                  <el-col :span="5">
-                    <div>
-                      <el-input id="2" v-model="mapSize" size="mini" min="0" />
-                    </div>
-                  </el-col>
-                </el-row>
                 <el-row>
-                  <el-col justify="center" :span="8">
-                    <el-button
-                      @click="update"
-                      type="warning"
-                      plain
-                      icon="el-icon-upload2"
-                      >Update Settings</el-button
-                    ></el-col
+                  <el-col :span="8">
+                    <el-form :model="settings" label-width="100px">
+                      <el-form-item
+                        label="玩家数量"
+                        prop="maxPlayer"
+                        :rules="[
+{ required: true, message: '不能为空'},
+{ type: 'number', message: '必须为数字值'}
+]"
+                      >
+                        <el-input
+                          type="number"
+                          v-model.number="settings.maxPlayer"
+                          autocomplete="off"
+                        >
+                        </el-input>
+                      </el-form-item>
+                      <el-form-item
+                        label="地图大小"
+                        prop="mapSize"
+                        :rules="[
+                      { required: true, message: '不能为空'},
+                      { type: 'number', message: '必须为数字值'}
+                      ]"
+                      >
+                        <el-input
+                          type="number"
+                          v-model.number="settings.mapSize"
+                          autocomplete="off"
+                        ></el-input>
+                      </el-form-item>
+                    </el-form>
+                  </el-col>
+                </el-row>
+
+                <el-row justify="center">
+                  <el-button
+                    @click="update"
+                    type="warning"
+                    plain
+                    icon="el-icon-upload2"
+                    >更新参数</el-button
                   >
-                  <el-col justify="center" :span="8"
-                    ><el-button
-                      @click="init"
-                      type="primary"
-                      plain
-                      icon="el-icon-refresh"
-                      >Initialize Model</el-button
-                    ></el-col
-                  ></el-row
-                >
+
+                  <el-button
+                    @click="init"
+                    type="primary"
+                    plain
+                    icon="el-icon-refresh"
+                    >初始化模型</el-button
+                  >
+
+                  <el-button
+                    @click="start"
+                    type="danger"
+                    plain
+                    icon="el-icon-video-play"
+                    >运行模型</el-button
+                  >
+                </el-row>
               </el-card>
               <el-divider></el-divider>
+
               <el-card>
-                <el-empty description="No result yet"></el-empty>
+                <el-empty description="未初始化模型"></el-empty>
+
                 <el-table :data="tableData" style="width: 100%">
-                  <el-table-column prop="id" label="日期" width="180">
+                  <el-table-column prop="id" label="ID" width="60">
                   </el-table-column>
-                  <el-table-column prop="location" label="姓名" width="180">
+                  <el-table-column prop="location" label="位置" width="100">
                   </el-table-column>
-                  <el-table-column prop="status" label="地址">
+                  <el-table-column prop="status" label="状态" width="100">
                   </el-table-column>
                 </el-table>
               </el-card> </el-main
             ><el-footer
               ><el-row
                 ><div>
+                  <span
+                    >ALC Simulator 由 XTARZ 使用
+                    <a target="_blank" href="https://v3.cn.vuejs.org/">Vue3</a
+                    >+<a target="_blank" href="https://element-plus.gitee.io/"
+                      >Element Plus</a
+                    >
+                    构建</span
+                  ><el-divider direction="vertical"></el-divider>
+                  <span>灵感来自于 YeFeng Miao</span>
                   <p>
-                    Build with Vue+Element UI Plus | inspired by YeFeng Miao
-                  </p>
-                  <p>
-                    Project hosted on
-                    <a href="https://github.com/FallenXtar/alc-exp-simulator"
+                    项目源代码托管在
+                    <a
+                      target="_blank"
+                      href="https://github.com/FallenXtar/alc-exp-simulator"
                       >Github</a
                     >
-                    and
-                    <a href="https://gitee.com/xtar/alc-exp-simulator">Gitee</a
+                    和
+                    <a
+                      target="_blank"
+                      href="https://gitee.com/xtar/alc-exp-simulator"
+                      >Gitee</a
                     >.
                   </p>
                 </div></el-row
