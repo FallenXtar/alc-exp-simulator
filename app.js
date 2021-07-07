@@ -1,11 +1,13 @@
 const MainWindow = {
   data() {
     return {
-      tableData: Sandbox.playerList,
+      tableData: [],
       settings: {
         maxPlayer: sandboxCapicity,
         mapSize: sandboxMapSize,
+        targetTurns: 10,
       },
+      show: true,
     };
   },
 
@@ -26,8 +28,8 @@ const MainWindow = {
     },
     init() {
       try {
-        initModel();
-        this.tableData = Sandbox.playerList;
+        Sandbox.initModel();
+        this.tableData = Sandbox.getLeaderboard(20);
       } catch (error) {
         this.$notify.error({
           title: "有错误发生",
@@ -36,10 +38,24 @@ const MainWindow = {
         });
         throw error;
       }
+      this.show = false;
     },
     start() {
-      this.$message({ message: "什么都没有发生，因为还没写好", center: true });
+
+      this.$message({ message: "开始运行模型", center: true });
+      
+      Sandbox.run(this.settings.targetTurns);
+      this.$message({ message: "模型运行结束", center: true });
+      this.tableData = Sandbox.getLeaderboard(20);
+      
     },
+    step() {
+      Sandbox.run(1);
+      this.tableData = Sandbox.getLeaderboard(20);
+    },
+    pause(){
+
+    }
   },
 };
 

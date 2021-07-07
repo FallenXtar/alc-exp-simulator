@@ -6,16 +6,18 @@ var sandboxCapicity = 10;
 var sandboxMapSize = 10;
 // 定义一维地图大小，地图会向原点右边扩展这个大小；
 
+var modelPause = false;
+
 /* 生成沙盒对象 */
 
-var Sandbox = {
+const Sandbox = {
   playerList: [],
   // 玩家列表
 
   map: [],
   // 地图
 
-  internalTime: 0,
+  internalTurn: 0,
   // 本次运行到的回合数
 
   timesRun: 0,
@@ -56,10 +58,30 @@ var Sandbox = {
     }
   },
   // 定义玩家初始化函数，生成指定数量的玩家，并填入玩家列表
+
+  initModel() {
+    Sandbox.initMap();
+    Sandbox.initPlayer();
+  },
+
+  run(turns) {
+
+  
+    while (turns > 0) {
+      if ((modelPause == true)) {
+        break;
+      }
+      revalStage();
+      moveStage();
+      battleStage();
+      this.internalTurn++
+      turns--;
+    }
+  },
 };
 
 /* 玩家原型对象 */
-var Player = {
+const Player = {
   id: 0,
   // 玩家ID，用于区分不同玩家，由 0 开始的整数
 
@@ -136,7 +158,6 @@ var Player = {
 
   move(path) {
     this.setLocation = fixLocation(this.location + path);
-    console.log(Sandbox.map);
   },
 };
 
@@ -166,11 +187,11 @@ function expTransfer(exp) {
 function battle(params) {
   switch (params.length) {
     case 0:
-      console.log("No one in the arena!!!");
+      // console.log("No one in the arena!!!");
       break;
 
     case 1:
-      console.log(params[0].id + " battled himself");
+      // console.log(params[0].id + " battled himself");
       break;
 
     default:
@@ -234,7 +255,22 @@ function fixLocation(a) {
 }
 // 这个函数将坐标限制在MapSize范围内，使得这个坐标系实际上是一个一维封闭坐标系，可以考虑每次坐标处理都套一层这个函数
 
-function initModel() {
-  Sandbox.initMap();
-  Sandbox.initPlayer();
+function revalStage() {
+  Sandbox.playerList.forEach((element) => {
+    if (element.status < 0) {
+      reval(element);
+    }
+  });
+}
+
+function moveStage() {
+  Sandbox.playerList.forEach((element) => {
+    element.move(_.random(-1, 1));
+  });
+}
+
+function battleStage() {
+  Sandbox.map.forEach((element) => {
+    battle(element);
+  });
 }

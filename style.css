@@ -1,9 +1,6 @@
 @import url("https://cdn.bootcdn.net/ajax/libs/element-plus/1.0.2-beta.53/theme-chalk/index.css");
 
-body {
-  background-image: url(img/bg.jpg);
-  background-repeat: repeat;
-}
+
 .el-row {
   margin-bottom: 20px;
 }
@@ -36,13 +33,14 @@ body {
   margin: auto;
 }
 .el-header {
-  background: #99a9bf;
+  background: white;
+  border-bottom: 1px solid #dcdfe6;
 }
 .el-main {
-  background: #e9e9e9;
+  background: whitesmoke;
 }
 .el-aside {
-  background: #c6ffff;
+  background: #badfdf;
 }
 .el-footer {
   color: #606266;

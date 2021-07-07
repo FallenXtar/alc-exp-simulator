@@ -48,7 +48,6 @@
 ]"
                       >
                         <el-input
-                          type="number"
                           v-model.number="settings.maxPlayer"
                           autocomplete="off"
                         >
@@ -63,8 +62,24 @@
                       ]"
                       >
                         <el-input
-                          type="number"
                           v-model.number="settings.mapSize"
+                          autocomplete="off"
+                        ></el-input>
+                      </el-form-item>
+                    </el-form>
+                  </el-col>
+                  <el-col :span="8">
+                    <el-form :model="settings" label-width="100px">
+                      <el-form-item
+                        label="运行回合"
+                        prop="targetTurns"
+                        :rules="[
+                      { required: true, message: '不能为空'},
+                      { type: 'number', message: '必须为数字值'}
+                      ]"
+                      >
+                        <el-input
+                          v-model.number="settings.targetTurns"
                           autocomplete="off"
                         ></el-input>
                       </el-form-item>
@@ -96,25 +111,56 @@
                     icon="el-icon-video-play"
                     >运行模型</el-button
                   >
+                  <el-button
+                    @click="step"
+                    type="danger"
+                    plain
+                    icon="el-icon-caret-right"
+                    >步进</el-button
+                  >
+                  <el-tooltip content="假的，还没做好" placement="top"
+                    ><el-button
+                      @click="pause"
+                      type="danger"
+                      plain
+                      icon="el-icon-video-pause"
+                      >暂停</el-button
+                    ></el-tooltip
+                  >
                 </el-row>
               </el-card>
               <el-divider></el-divider>
 
               <el-card>
-                <el-empty description="未初始化模型"></el-empty>
-
-                <el-table :data="tableData" style="width: 100%">
-                  <el-table-column prop="id" label="ID" width="60">
-                  </el-table-column>
-                  <el-table-column prop="location" label="位置" width="100">
-                  </el-table-column>
-                  <el-table-column prop="status" label="状态" width="100">
-                  </el-table-column>
-                </el-table>
-              </el-card> </el-main
-            ><el-footer
-              ><el-row
-                ><div>
+                <el-empty
+                  image="img/bg.jpg"
+                  description="未初始化模型"
+                  v-show="show"
+                ></el-empty>
+                <transition>
+                  <el-descriptions title="用户信息" border v-show="!show">
+                    <el-descriptions-item label="用户名"
+                      >这里</el-descriptions-item
+                    >
+                    <el-descriptions-item label="手机号"
+                      >本来</el-descriptions-item
+                    >
+                    <el-descriptions-item label="居住地"
+                      >是用来</el-descriptions-item
+                    >
+                    <el-descriptions-item label="备注">
+                      <el-tag size="small">写</el-tag>
+                    </el-descriptions-item>
+                    <el-descriptions-item label="联系地址"
+                      >模型运行时候的信息</el-descriptions-item
+                    >
+                  </el-descriptions>
+                </transition>
+              </el-card>
+            </el-main>
+            <el-footer>
+              <el-row>
+                <div>
                   <span
                     >ALC Simulator 由 XTARZ 使用
                     <a target="_blank" href="https://v3.cn.vuejs.org/">Vue3</a
@@ -141,15 +187,16 @@
                 </div></el-row
               ></el-footer
             ></el-container
-          ><el-aside
-            ><p>1</p>
-            <p>2</p>
-            <p>3</p>
-            <p>4</p>
-            <p>5</p>
-            <p>6</p></el-aside
-          ></el-container
-        >
+          ><el-aside>
+            <el-table :data="tableData" style="width: 100%" height="800px">
+              <el-table-column prop="id" label="ID" width="100">
+              </el-table-column>
+              <el-table-column prop="location" label="位置" width="100">
+              </el-table-column>
+              <el-table-column prop="status" label="状态" width="100">
+              </el-table-column>
+            </el-table> </el-aside
+        ></el-container>
       </el-container>
     </div>
     <script src="main.js"></script>
