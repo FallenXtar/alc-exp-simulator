@@ -18,6 +18,7 @@
     <script src="https://cdn.bootcdn.net/ajax/libs/element-plus/1.0.2-beta.53/index.full.min.js"></script>
     <script src="https://cdn.bootcdn.net/ajax/libs/element-plus/1.0.2-beta.53/umd/locale/es.js"></script>
     <script src="https://cdn.bootcdn.net/ajax/libs/dayjs/1.10.5/locale/zh-cn.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/p5.js/1.4.0/p5.min.js"></script>
   </head>
 
   <body>
@@ -31,11 +32,16 @@
             <el-main>
               <el-card shadow="hover">
                 <template #header>
-                  <div class="card-header" >
+                  <div class="card-header">
                     <span>模型参数设置</span>
-                    <el-button class="button" type="text" icon="el-icon-question">使用帮助</el-button>
+                    <el-button
+                      class="button"
+                      type="text"
+                      icon="el-icon-question"
+                      @click="helpVisible = true"
+                      >使用帮助</el-button
+                    >
                   </div>
-
                 </template>
                 <el-row>
                   <el-col :span="8">
@@ -136,10 +142,10 @@
                 <el-empty
                   image="img/bg.jpg"
                   description="未初始化模型"
-                  v-show="show"
+                  v-show="showResult"
                 ></el-empty>
                 <transition>
-                  <el-descriptions title="用户信息" border v-show="!show">
+                  <el-descriptions title="用户信息" border v-show="!showResult">
                     <el-descriptions-item label="用户名"
                       >这里</el-descriptions-item
                     >
@@ -161,32 +167,40 @@
             </el-main>
             <el-footer>
               <el-row>
-                <div>
-                  <span
-                    >ALC Simulator 由 XTARZ 使用
-                    <a target="_blank" href="https://v3.cn.vuejs.org/">Vue3</a
-                    >+<a target="_blank" href="https://element-plus.gitee.io/"
-                      >Element Plus</a
-                    >
-                    构建</span
-                  ><el-divider direction="vertical"></el-divider>
-                  <span>灵感来自于 YeFeng Miao</span>
-                  <p>
-                    项目源代码托管在
-                    <a
-                      target="_blank"
-                      href="https://github.com/FallenXtar/alc-exp-simulator"
-                      >Github</a
-                    >
-                    和
-                    <a
-                      target="_blank"
-                      href="https://gitee.com/xtar/alc-exp-simulator"
-                      >Gitee</a
-                    >.
-                  </p>
-                </div></el-row
-              ></el-footer
+                <div>ALC Simulator 由 XTARZ 使用
+                  <el-link
+                    type="primary"
+                    target="_blank"
+                    href="https://v3.cn.vuejs.org/"
+                    >Vue3</el-link
+                  >+<el-link
+                    type="primary"
+                    target="_blank"
+                    href="https://element-plus.gitee.io/"
+                    >Element Plus</el-link
+                  >
+                  构建
+                  <el-divider direction="vertical"></el-divider>
+                  灵感来自于 YeFeng Miao</div>
+                </el-row
+              >
+              <el-row>
+                <div>项目源代码托管在
+                  <el-link
+                    type="primary"
+                    target="_blank"
+                    href="https://github.com/FallenXtar/alc-exp-simulator"
+                    >Github</el-link
+                  >
+                  和
+                  <el-link
+                    type="primary"
+                    target="_blank"
+                    href="https://gitee.com/xtar/alc-exp-simulator"
+                    >Gitee</el-link
+                  >.</div>
+                
+              </el-row></el-footer
             ></el-container
           ><el-aside>
             <el-table :data="tableData" style="width: 100%" height="800px">
@@ -199,7 +213,21 @@
             </el-table> </el-aside
         ></el-container>
       </el-container>
+      <el-dialog
+        title="使用说明"
+        v-model="helpVisible"
+        width="30%"
+        destroy-on-close
+      >
+        <ol>
+          <li>输入参数</li>
+          <li>点击[更新参数]</li>
+          <li>点击[初始化模型]</li>
+          <li>运行模型</li>
+        </ol>
+      </el-dialog>
     </div>
+
     <script src="main.js"></script>
     <script src="app.js"></script>
   </body>
