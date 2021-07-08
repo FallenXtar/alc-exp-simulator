@@ -79,6 +79,8 @@ const Sandbox = {
   initModel() {
     Sandbox.initMap();
     Sandbox.initPlayer();
+    Sandbox.internalTurn = 0;
+    Sandbox.expRecord = 0;
   },
 
   updateHighest() {

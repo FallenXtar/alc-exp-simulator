@@ -46,6 +46,7 @@ const MainWindow = {
         throw error;
       }
       this.showResult = false;
+      this.refresh();
     },
     start() {
       Sandbox.run(this.settings.targetTurns);
