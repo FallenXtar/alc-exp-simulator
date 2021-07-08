@@ -23,6 +23,8 @@ const Sandbox = {
   timesRun: 0,
   // 沙盒运行过的次数
 
+  expRecord: 0,
+
   get deadPlayerList() {
     let a = [];
     this.playerList.forEach((element) => {
@@ -31,6 +33,21 @@ const Sandbox = {
       }
     });
     return a;
+  },
+
+  get totalExp() {
+    let exp = 0;
+    this.playerList.forEach((element) => {
+      if (element.status > 0) {
+        exp = exp + element.status;
+      }
+    });
+
+    return exp;
+  },
+
+  get highestLevel() {
+    return expToLevel(this.expRecord);
   },
 
   getLeaderboard(number) {
@@ -64,17 +81,26 @@ const Sandbox = {
     Sandbox.initPlayer();
   },
 
-  run(turns) {
+  updateHighest() {
+    let h = _.orderBy(this.playerList, "highestExp", "desc");
+    if (h[0].highestExp > this.expRecord) {
+      this.expRecord = h[0].highestExp;
+      return h[0].highestExp;
+    }
+    return this.expRecord;
+  },
 
-  
+  run(turns) {
     while (turns > 0) {
-      if ((modelPause == true)) {
+      if (modelPause == true) {
         break;
       }
       revalStage();
       moveStage();
       battleStage();
-      this.internalTurn++
+      this.updateHighest();
+
+      this.internalTurn++;
       turns--;
     }
   },
@@ -134,8 +160,11 @@ const Player = {
   get level() {
     return expToLevel(this.status);
   },
-
   // 实用属性，返回玩家的当前等级，和多余的经验数量，以数组呈现
+
+  get highestLevel() {
+    return expToLevel(this.highestExp);
+  },
 
   win(exp) {
     this.status = this.status + expTransfer(exp);

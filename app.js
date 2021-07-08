@@ -9,6 +9,12 @@ const MainWindow = {
       },
       showResult: true,
       helpVisible: false,
+
+      modelPlayerAmount: NaN,
+      modelTotalExp: NaN,
+      modelDeadPlayer: NaN,
+      modelHighestExp: [1, 1],
+      modelTotalRun: NaN,
     };
   },
 
@@ -42,15 +48,21 @@ const MainWindow = {
       this.showResult = false;
     },
     start() {
-      this.$message({ message: "开始运行模型", center: true });
-
       Sandbox.run(this.settings.targetTurns);
       this.$message({ message: "模型运行结束", center: true });
-      this.tableData = Sandbox.getLeaderboard(20);
+      this.refresh();
     },
     step() {
       Sandbox.run(1);
+      this.refresh();
+    },
+    refresh() {
       this.tableData = Sandbox.getLeaderboard(20);
+      this.modelPlayerAmount = Sandbox.playerList.length;
+      this.modelTotalExp = Sandbox.totalExp;
+      this.modelDeadPlayer = Sandbox.deadPlayerList.length;
+      this.modelHighestExp = Sandbox.highestLevel;
+      this.modelTotalRun = Sandbox.internalTurn;
     },
     pause() {},
   },

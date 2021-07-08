@@ -145,29 +145,36 @@
                   v-show="showResult"
                 ></el-empty>
                 <transition>
-                  <el-descriptions title="用户信息" border v-show="!showResult">
-                    <el-descriptions-item label="用户名"
-                      >这里</el-descriptions-item
+                  <el-descriptions title="模型信息" border v-show="!showResult">
+                    <el-descriptions-item label="玩家数"
+                      >{{modelPlayerAmount}}</el-descriptions-item
                     >
-                    <el-descriptions-item label="手机号"
-                      >本来</el-descriptions-item
+                    <el-descriptions-item label="经验总和"
+                      >{{modelTotalExp}}</el-descriptions-item
                     >
-                    <el-descriptions-item label="居住地"
-                      >是用来</el-descriptions-item
+                    <el-descriptions-item label="死亡玩家数"
+                      >{{modelDeadPlayer}}</el-descriptions-item
                     >
-                    <el-descriptions-item label="备注">
-                      <el-tag size="small">写</el-tag>
+                    <el-descriptions-item label="当前运行回合"
+                      >{{modelTotalRun}}</el-descriptions-item
+                    >
+                    <el-descriptions-item label="最高经验记录">
+                      Lv.{{modelHighestExp[0]}}
+                      <el-progress
+                        :percentage="modelHighestExp[1]/(modelHighestExp[0]+1)*100"
+                        ><span
+                          >{{modelHighestExp[1]}}/{{modelHighestExp[0]+1}}</span
+                        ></el-progress
+                      >
                     </el-descriptions-item>
-                    <el-descriptions-item label="联系地址"
-                      >模型运行时候的信息</el-descriptions-item
-                    >
                   </el-descriptions>
                 </transition>
               </el-card>
             </el-main>
             <el-footer>
               <el-row>
-                <div>ALC Simulator 由 XTARZ 使用
+                <div>
+                  ALC Simulator 由 XTARZ 使用
                   <el-link
                     type="primary"
                     target="_blank"
@@ -181,11 +188,12 @@
                   >
                   构建
                   <el-divider direction="vertical"></el-divider>
-                  灵感来自于 YeFeng Miao</div>
-                </el-row
-              >
+                  灵感来自于 YeFeng Miao
+                </div>
+              </el-row>
               <el-row>
-                <div>项目源代码托管在
+                <div>
+                  项目源代码托管在
                   <el-link
                     type="primary"
                     target="_blank"
@@ -198,8 +206,8 @@
                     target="_blank"
                     href="https://gitee.com/xtar/alc-exp-simulator"
                     >Gitee</el-link
-                  >.</div>
-                
+                  >.
+                </div>
               </el-row></el-footer
             ></el-container
           ><el-aside>
