@@ -1,6 +1,5 @@
 @import url("https://cdn.bootcdn.net/ajax/libs/element-plus/1.0.2-beta.53/theme-chalk/index.css");
 
-
 .el-row {
   margin-bottom: 20px;
 }
@@ -50,5 +49,6 @@
   background: #badfdf;
 }
 .el-footer {
+  margin-top: 20px;
   color: #606266;
 }
