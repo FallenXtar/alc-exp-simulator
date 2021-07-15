@@ -4,7 +4,9 @@
       "path": "."
     }
   ],
-  "settings": {},
+  "settings": {
+    "liveServer.settings.root": "./dist/"
+  },
   "extensions": {
     "recommendations": ["ritwickdey.liveserver"]
   }
