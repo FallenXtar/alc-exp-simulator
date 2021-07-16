@@ -1,5 +1,5 @@
 <template>
-<el-aside>123</el-aside>
+  <el-aside>123</el-aside>
 </template>
 
 <script lang="ts">
