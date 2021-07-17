@@ -9,7 +9,7 @@
           icon="el-icon-question"
           @click="helpVisible = true"
         >
-          使用帮助
+          使用说明
         </el-button>
       </div>
     </template>
@@ -25,7 +25,14 @@
       <li>点击[更新参数]</li>
       <li>点击[初始化模型]</li>
       <li>运行模型</li>
+      <li>若要更改参数，回到步骤 1</li>
     </ol>
+    <a
+      target="_blank"
+      href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=-pe_hoqfjITQnZA"
+    >
+      <el-button icon="el-icon-message" type="warning"> 还不明白 </el-button>
+    </a>
   </el-dialog>
 </template>
 
