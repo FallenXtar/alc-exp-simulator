@@ -1,5 +1,5 @@
 <template>
-  <el-card>
+  <el-card shadow="hover">
     <template #header>
       <div class="card-header">
         <span>模型参数设置</span>

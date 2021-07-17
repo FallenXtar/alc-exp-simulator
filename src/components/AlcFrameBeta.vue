@@ -1,6 +1,6 @@
 <template>
   <el-collapse-transition>
-    <el-card>
+    <el-card shadow="hover">
       <el-empty description="未初始化模型" v-show="showResult">
         <template #image>
           <img src="../assets/bg.jpg" alt="ALC Logo" />
