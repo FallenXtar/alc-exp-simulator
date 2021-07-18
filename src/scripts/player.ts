@@ -1,7 +1,6 @@
 import { SandboxInstance } from "./sandbox";
-import { fixLocation, expToLevel, expTransfer } from "./core";
 import _ from "lodash";
-
+import { fixLocation, expToLevel, expTransfer } from "./core";
 
 export class Player {
   /* 玩家原型对象 */

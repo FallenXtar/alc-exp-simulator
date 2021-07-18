@@ -1,6 +1,7 @@
 import _ from "lodash";
-import { SandboxInstance } from "./sandbox";
 import { Player } from "./player";
+import { SandboxInstance } from "./sandbox";
+
 /* 一些公用函数 */
 
 export function expToLevel(exp: number) {

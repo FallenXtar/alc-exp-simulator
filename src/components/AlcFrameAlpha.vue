@@ -13,38 +13,30 @@
         </el-button>
       </div>
     </template>
+    <div>{{ test }}</div>
+    <alc-frame-alpha-help v-model="helpVisible"></alc-frame-alpha-help>
   </el-card>
-  <el-dialog
-    title="使用说明"
-    v-model="helpVisible"
-    width="30%"
-    destroy-on-close
-  >
-    <ol>
-      <li>输入参数</li>
-      <li>点击[更新参数]</li>
-      <li>点击[初始化模型]</li>
-      <li>运行模型</li>
-      <li>若要更改参数，回到步骤 1</li>
-    </ol>
-    <a
-      target="_blank"
-      href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=-pe_hoqfjITQnZA"
-    >
-      <el-button icon="el-icon-message" type="warning"> 还不明白 </el-button>
-    </a>
-  </el-dialog>
 </template>
 
 <script lang="ts">
+import store from "@/store";
 import { defineComponent } from "vue";
+import AlcFrameAlphaHelp from "./AlcFrameAlphaHelp.vue";
 
 export default defineComponent({
   name: "AlcFrameAlpha",
+  components: {
+    AlcFrameAlphaHelp,
+  },
   data(): Record<string, unknown> {
     return {
       helpVisible: false,
     };
+  },
+  computed: {
+    test() {
+      return store.state.sandbox;
+    },
   },
 });
 </script>
